@@ -19,3 +19,28 @@ function fillImageToCanvas(){
     const img = document.getElementById("img");
     ctx.drawImage(img, 10, 0);
 }
+
+let imageCapture;
+function onGetUserMediaButtonClick() {
+  navigator.mediaDevices
+    .getUserMedia({ video: true })
+    .then((mediaStream) => {
+      document.querySelector("video").srcObject = mediaStream;
+
+      const track = mediaStream.getVideoTracks()[0];
+      imageCapture = new ImageCapture(track);
+    })
+    .catch((error) => console.error(error));
+}
+
+function onStartScreen() {
+    navigator.mediaDevices
+      .getDisplayMedia({ video: true })
+      .then((mediaStream) => {
+        document.querySelector("video").srcObject = mediaStream;
+  
+        const track = mediaStream.getVideoTracks()[0];
+        imageCapture = new ImageCapture(track);
+      })
+      .catch((error) => console.error(error));
+}
